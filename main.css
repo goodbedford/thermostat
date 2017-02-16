@@ -17,7 +17,7 @@ h2 {
 }
 .home--md {
   margin: 20px auto;
-  width: 700px;
+  max-width: 700px;
 }
 .home__header {
   align-items: center;
@@ -55,6 +55,7 @@ h2 {
   color: silver;
   display: flex;
   flex: 1;
+  flex-wrap: wrap;
   font-size: 24px;
   justify-content: space-between;
   padding: 10px 20px;
@@ -93,6 +94,7 @@ h2 {
 .room__controls {
   align-items: center;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-around;
 }
 .room__section {
