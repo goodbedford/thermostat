@@ -142,100 +142,22 @@ describe("homeStateModule", function() {
       expect(homeState.getNewestRoomState()).toBe(room);
     });
   });
-
 });
 
-
-xdescribe("TempControl", function() {
-  var tempC;
-  var temp;
-  var target = document.querySelector(".js-temp");
-  var btnGet = document.querySelector(".js-get-button");
-  var btnSet = document.querySelector(".js-set-button");
-  var inputText = document.querySelector(".js-temp-input");
-  beforeEach(function() {
-    tempC = TempControl;
-    tempC.init(50, target, btnSet, btnGet, inputText);
-  });
-
-  describe("getTemp", function() {
-    it("should return temp", function() {
-      temp = tempC.getTemp();
-      expect(temp).toEqual(50);
-      expect(typeof temp === "number").toBe(true);
-    });
-  });
-  describe("getTempRender", function() {
-    it("should show correct temp", function() {
-      var tempText;
-      tempC.setTempRender(20);
-      tempC.getTempRender();
-      tempText = document.querySelector(".js-temp");
-
-      expect(tempText.innerHTML).toEqual("20");
-
-    })
-  });
-  describe("setTempRender", function() {
-    it("should show correct temp", function() {
-      var tempText;
-      // debugger;
-      tempC.setTempRender(99);
-      tempText = document.querySelector(".js-temp");
-
-      expect(tempText.innerHTML).toEqual("99");
-    })
-  })
-});
-
-xdescribe("Home", function() {
-  var home;
-  beforeEach(function() {
-    home = homeStateModule();
-  });
-
-  it("should exits", function() {
-    expect(home).toBeDefined();
-  });
-  describe("home.rooms", function() {
-    it("should be an array", function() {
-      expect(Array.isArray(home.getRooms())).toBe(true);
-    })
-    it("should have zero rooms", function() {
-      expect(home.getRooms().length).toEqual(0);
-    });
-  });
-  describe("home.addRoom", function() {
-    it("should exits", function() {
-      expect(home.addRoom).toBeDefined();
-    });
-    it("should add rooms to rooms array", function() {
-      home.addRoom("movie room");
-      expect(home.getRooms().length).toEqual(1);
-    });
-  })
-  describe("home.getRoom", function() {
-    it("should exists", function() {
-      expect(home.getRoom).toBeDefined();
-    });
-    it("should return the requested room", function() {
-      var room = "movie room";
-      home.addRoom(room);
-      console.log(home)
-      expect(home.getRoom(room).getRoomName() ).toEqual(room );
-    });
-  });
-
-});
-
-xdescribe("Button", function() {
+describe("Button", function() {
   it("should be defined", function() {
     expect(Button).toBeDefined();
   });
   describe("button__section", function() {
     var $btnSection;
+    var homeState;
+    var roomState;
+
     beforeEach(function() {
-      $btnSection = Button({on:"open", off: "closed"}, "row", "curtains");
+      homeState = homeStateModule();
+      homeState.addRoom("living room");
+      roomState = homeState.getRoom(homeState.getCurrentRoomId());
+      $btnSection = Button({on:"open", off: "closed"}, "curtains", roomState);
     });
     it("should return element with .button__section class", function() {
       var isClass = $btnSection.hasClass("button__section");
@@ -250,72 +172,5 @@ xdescribe("Button", function() {
       var $btns = $btnSection.find("button");
       expect($btns.length).toBe(2);
     });
-  });
-});
-
-xdescribe("ButtonGroupModule", function() {
-  var buttonGroup;
-
-  beforeEach(function() {
-    buttonGroup = ButtonGroupModule();
-    buttonGroup.init({on:"on", off: "off"}, "row");
-  });
-  describe("ButtonGroupModule.init", function() {
-    var buttonGroup;
-
-    beforeEach(function() {
-      buttonGroup = ButtonGroupModule();
-      buttonGroup.init({on:"on", off: "off"}, "row");
-    });
-    it("should be defined", function() {
-      expect(buttonGroup.init).toBeDefined();
-    });
-  });
-  describe("ButtonGroupModule.getButtonGroup", function() {
-    var buttonGroup;
-
-    beforeEach(function() {
-      buttonGroup = ButtonGroupModule();
-      buttonGroup.init({on:"on", off: "off"}, "row");
-    });
-    it("should be defined", function() {
-      expect(buttonGroup.getButtonGroup).toBeDefined();
-    });
-    it("should return button group elements", function() {
-      var btnGroup = buttonGroup.getButtonGroup();
-      expect(btnGroup).toBeDefined();
-    });
-
-    it("should have two buttons ", function() {
-      var btnGroup = buttonGroup.getButtonGroup();
-      var btns = btnGroup.find(".button");
-      expect(btns.length).toBe(2);
-    });
-  });
-  describe("ButtonGroupModule.getButtonSection", function() {
-    var buttonGroup;
-
-    beforeEach(function() {
-      buttonGroup = ButtonGroupModule();
-      buttonGroup.init({on:"on", off: "off"}, "row", "lights");
-    });
-    it("should be defined", function() {
-      expect(buttonGroup.getButtonSection).toBeDefined();
-    });
-    it("should return button section element", function() {
-      var btnSection = buttonGroup.getButtonSection();
-      expect(btnSection).toBeDefined();
-    });
-
-    it("should have a div with class title ", function() {
-      var btnSection = buttonGroup.getButtonSection();
-      var btns = btnSection.find(".button__group-title");
-      expect(btns.html()).toBe("lights");
-    });
-  });
-
-  xit("should exist", function() {
-    console.log("buttongroup", buttonGroup)
-    expect(buttonGroup).toBeDefined();
   });
 });
