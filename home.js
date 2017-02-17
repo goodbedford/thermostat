@@ -13,7 +13,7 @@ function home(homeState) {
   function init() {
     var currentRoomId = homeState.getCurrentRoomId();
     $roomsPanel.append( $("<div>").addClass("home__panel-header").html("Rooms"))
-    $homeHeader.append("Home Automation by Goodbedford LLC", $date);
+    $homeHeader.append($("<span>").html("Home Automation by Goodbedford LLC"), $date);
     homeState.getRooms().forEach(function(roomState, index) {
 
       var panelItem = panelItemMaker(homeState, roomState);
